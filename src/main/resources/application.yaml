@@ -1,0 +1,3 @@
+h2sm:
+  api:
+    url: '@server.url@'

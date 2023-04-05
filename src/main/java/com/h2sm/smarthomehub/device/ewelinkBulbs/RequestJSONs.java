@@ -15,13 +15,6 @@ public class RequestJSONs {
             "    }\n" +
             "}";
 
-    public static final String g = "{\n" +
-            " \"data\":{\n" +
-            " \"ltype\": \"color\",\n" +
-            " \"color\": {\"br\":100, \"r\":110, \"g\": 255, \"b\": 0}\n" +
-            " }\n" +
-            "}";
-
     public static String changeColor(List<String> brgb) {//brightness,red,green,blue
         String brightness = brgb.get(2);
         String red = brgb.get(3);

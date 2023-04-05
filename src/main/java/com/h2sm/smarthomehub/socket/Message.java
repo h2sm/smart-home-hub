@@ -1,11 +1,12 @@
-package com.h2sm.smarthomehub.device.ewelinkBulbs;
+package com.h2sm.smarthomehub.socket;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-@Data
 @AllArgsConstructor
-public class DataSection {
-
+@NoArgsConstructor
+@Data
+public class Message {
+    private String text;
 }

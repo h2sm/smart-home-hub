@@ -1,0 +1,8 @@
+{
+  "properties": [
+    {
+      "name": "h2sm.api.url",
+      "type": "java.lang.String",
+      "description": "Description for h2sm.api.url."
+  }
+] }
