@@ -1,3 +1,8 @@
 h2sm:
   api:
     url: '@server.url@'
+#logging:
+#  level:
+#    root: DEBUG
+#    org.springframework.web: DEBUG
+

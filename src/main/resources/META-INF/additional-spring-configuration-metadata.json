@@ -4,5 +4,10 @@
       "name": "h2sm.api.url",
       "type": "java.lang.String",
       "description": "Description for h2sm.api.url."
-  }
-] }
+    },
+    {
+      "name": "h2sm.api.logging.level.org.springframework.web",
+      "type": "java.lang.String",
+      "description": "Description for h2sm.api.logging.level.org.springframework.web."
+    }
+  ] }

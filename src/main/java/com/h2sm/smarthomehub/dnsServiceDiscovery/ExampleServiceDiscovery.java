@@ -1,4 +1,4 @@
-package com.h2sm.smarthomehub;
+package com.h2sm.smarthomehub.dnsServiceDiscovery;
 
 import javax.jmdns.JmDNS;
 import javax.jmdns.ServiceEvent;
