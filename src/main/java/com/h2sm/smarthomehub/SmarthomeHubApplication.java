@@ -8,8 +8,6 @@ public class SmarthomeHubApplication {
 
     public static void main(String[] args) {
         SpringApplication.run(SmarthomeHubApplication.class, args);
-
-
     }
 
 }

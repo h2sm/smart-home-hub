@@ -1,4 +1,4 @@
-package com.h2sm.smarthomehub.socket;
+package com.h2sm.smarthomehub.dtos.messages;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
