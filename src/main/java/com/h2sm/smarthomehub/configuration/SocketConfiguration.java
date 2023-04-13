@@ -9,6 +9,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.messaging.converter.DefaultContentTypeResolver;
 import org.springframework.messaging.converter.MappingJackson2MessageConverter;
 import org.springframework.messaging.converter.MessageConverter;
+import org.springframework.messaging.simp.stomp.StompHeaders;
 import org.springframework.messaging.simp.stomp.StompSessionHandler;
 import org.springframework.util.MimeTypeUtils;
 import org.springframework.web.client.RestTemplate;
@@ -16,6 +17,7 @@ import org.springframework.web.socket.client.standard.StandardWebSocketClient;
 import org.springframework.web.socket.config.annotation.*;
 import org.springframework.web.socket.messaging.WebSocketStompClient;
 
+import java.util.Collections;
 import java.util.List;
 
 @Configuration
@@ -37,12 +39,11 @@ public class SocketConfiguration {
     @Bean
     public WebSocketStompClient webSocketClient() {
         var d = AuthRequest.authHub();
-
         var client = new StandardWebSocketClient();
         WebSocketStompClient stompClient = new WebSocketStompClient(client);
         stompClient.setMessageConverter(new MappingJackson2MessageConverter());
         StompSessionHandler sessionHandler = new SocketStompHandler(service());
-        stompClient.connect("ws://localhost:8082/hello?token=" + d.getToken(), sessionHandler);
+        stompClient.connect("ws://localhost:8082/hello?token=" + d.getToken() + "&hubAuthId=666", sessionHandler);
 
         stompClient.start();
         return stompClient;

@@ -9,23 +9,21 @@ import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
-import java.util.List;
+import java.util.HashMap;
 
 @Service
 @AllArgsConstructor
 public class StompService {
     private final RestTemplate restTemplate;
 
-    public void handleAction(Action action) {
+    public Action handleAction(Action action) {
         var type = action.getAction();
         switch (type) {
             case "TURN_ON": {
-                turnOnLights(action);
-                break;
+                return turnOnLights(action);
             }
             case "TURN_OFF": {
-                turnOffLights(action);
-                break;
+                return turnOffLights(action);
             }
             case "CHANGE_COLOR": {
                 changeColor(action);
@@ -36,17 +34,18 @@ public class StompService {
                 break;
             }
         }
+        return new Action(null, null);
     }
 
-    private void turnOnLights(Action action) {
+    private Action turnOnLights(Action action) {
         String url = "http://" + action.getMap().get("ip") + ":8081/zeroconf/switch";
-        sendCommand(RequestJSONs.TURN_ON, url);
+        return sendCommand(RequestJSONs.TURN_ON, url);
 
     }
 
-    private void turnOffLights(Action action) {
+    private Action turnOffLights(Action action) {
         String url = "http://" + action.getMap().get("ip") + ":8081/zeroconf/switch";
-        sendCommand(RequestJSONs.TURN_OFF, url);
+        return sendCommand(RequestJSONs.TURN_OFF, url);
 
     }
 
@@ -61,12 +60,14 @@ public class StompService {
 
     }
 
-    private void sendCommand(String requestJson, String url) {
+    private Action sendCommand(String requestJson, String url) {
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
 
         HttpEntity<String> entity = new HttpEntity<>(requestJson, headers);
         String answer = restTemplate.postForObject(url, entity, String.class);
-        System.out.println(answer);
+        var map = new HashMap<String, String>();
+        map.put("STATUS", answer);
+        return new Action("RESPONSE", map);
     }
 }

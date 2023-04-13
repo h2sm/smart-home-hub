@@ -8,13 +8,15 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.messaging.simp.stomp.*;
 
 import java.lang.reflect.Type;
+import java.util.Collections;
 import java.util.HashMap;
 
 @Slf4j
 @AllArgsConstructor
 public class SocketStompHandler extends StompSessionHandlerAdapter {
-    private StompService service;
     public static StompSession stompSession;
+    private StompService service;
+
     @Override
     public void afterConnected(StompSession session, StompHeaders headers) {
         System.out.println("Client connected: headers {}" + headers);
@@ -22,14 +24,15 @@ public class SocketStompHandler extends StompSessionHandlerAdapter {
         session.subscribe("/user/queue/greetings", this);
 //        String message = "one-time message from client";
 //        log.info("Client sends: {}", message);
-       session.send("/app/hello",new Action());
+        session.send("/resp", new Action());
     }
 
     @Override
     public void handleFrame(StompHeaders headers, Object payload) {
         log.info("Client received: payload {}, headers {}", payload, headers);
         var actionMessage = ((Action) payload);
-        service.handleAction(actionMessage);
+        var response = service.handleAction(actionMessage);
+        sendData(response);
     }
 
     @Override
@@ -43,12 +46,13 @@ public class SocketStompHandler extends StompSessionHandlerAdapter {
         log.error("Client error: exception {}, command {}, payload {}, headers {}",
                 exception.getMessage(), command, payload, headers);
     }
+
     @Override
     public void handleTransportError(StompSession session, Throwable exception) {
         log.error("Client transport error: error {}", exception.getMessage());
     }
 
-    public void sendData(Action action){
-        stompSession.send("/app/hello", action);
+    public void sendData(Action action) {
+        stompSession.send("/resp", action);
     }
 }
