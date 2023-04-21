@@ -8,9 +8,9 @@ import org.springframework.web.client.RestTemplate;
 @Component
 public class AuthRequest {
 
-    public static TokenDTO authHub() {
+    public static TokenDTO authHub(String uuid, String secret) {
         RestTemplate restTemplate = new RestTemplate();
         var url = "http://localhost:8082/api/auth/hub";
-        return restTemplate.postForObject(url,new AuthHubDTO("666", "lol"), TokenDTO.class);
+        return restTemplate.postForObject(url,new AuthHubDTO(uuid, secret), TokenDTO.class);
     }
 }

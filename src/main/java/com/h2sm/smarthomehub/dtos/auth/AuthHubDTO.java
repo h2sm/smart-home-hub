@@ -12,6 +12,6 @@ import java.io.Serializable;
 @NoArgsConstructor
 @Component
 public class AuthHubDTO implements Serializable {
-    private String hubAuthId;
-    private String hubPass;
+    private String hubUuid;
+    private String hubSecret;
 }

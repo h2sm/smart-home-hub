@@ -52,8 +52,8 @@ public class StompService {
     private void changeColor(Action action) {
         String url = "http://" + action.getMap().get("ip") + ":8081/zeroconf/dimmable";
 
-        //String requestJson = RequestJSONs.changeColor();
-        //sendCommand(req);
+        String requestJson = RequestJSONs.changeColor(action.getMap());
+        sendCommand(requestJson, url);
     }
 
     private void getStateOfDevices(Action action) {

@@ -1,6 +1,7 @@
 package com.h2sm.smarthomehub.configuration;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.h2sm.smarthomehub.preferences.PreferencesStorage;
 import com.h2sm.smarthomehub.stompHandler.SocketStompHandler;
 import com.h2sm.smarthomehub.stompService.StompService;
 import lombok.AllArgsConstructor;
@@ -9,7 +10,6 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.messaging.converter.DefaultContentTypeResolver;
 import org.springframework.messaging.converter.MappingJackson2MessageConverter;
 import org.springframework.messaging.converter.MessageConverter;
-import org.springframework.messaging.simp.stomp.StompHeaders;
 import org.springframework.messaging.simp.stomp.StompSessionHandler;
 import org.springframework.util.MimeTypeUtils;
 import org.springframework.web.client.RestTemplate;
@@ -17,7 +17,6 @@ import org.springframework.web.socket.client.standard.StandardWebSocketClient;
 import org.springframework.web.socket.config.annotation.*;
 import org.springframework.web.socket.messaging.WebSocketStompClient;
 
-import java.util.Collections;
 import java.util.List;
 
 @Configuration
@@ -35,17 +34,18 @@ public class SocketConfiguration {
         return new StompService(restTemplate());
     }
 
-
     @Bean
     public WebSocketStompClient webSocketClient() {
-        var d = AuthRequest.authHub();
+        var uuid = "8a76gd1q";
+        var secret = "SECRET_8a76gd1q";
+        var token = AuthRequest.authHub(uuid, secret);
         var client = new StandardWebSocketClient();
         WebSocketStompClient stompClient = new WebSocketStompClient(client);
         stompClient.setMessageConverter(new MappingJackson2MessageConverter());
         StompSessionHandler sessionHandler = new SocketStompHandler(service());
-        stompClient.connect("ws://localhost:8082/hello?token=" + d.getToken() + "&hubAuthId=666", sessionHandler);
+        stompClient.connect("ws://localhost:8082/hello?token=" + token.getToken() + "&hubUuid=" + uuid, sessionHandler);
 
-        stompClient.start();
+        //stompClient.start();
         return stompClient;
     }
 
@@ -59,5 +59,4 @@ public class SocketConfiguration {
         messageConverters.add(converter);
         return false;
     }
-
 }

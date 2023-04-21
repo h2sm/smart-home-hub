@@ -24,7 +24,7 @@ public class SocketStompHandler extends StompSessionHandlerAdapter {
         session.subscribe("/user/queue/greetings", this);
 //        String message = "one-time message from client";
 //        log.info("Client sends: {}", message);
-        session.send("/resp", new Action());
+        //session.send("/app/resp", new Action());
     }
 
     @Override
@@ -53,6 +53,6 @@ public class SocketStompHandler extends StompSessionHandlerAdapter {
     }
 
     public void sendData(Action action) {
-        stompSession.send("/resp", action);
+        stompSession.send("/app/resp", action);
     }
 }

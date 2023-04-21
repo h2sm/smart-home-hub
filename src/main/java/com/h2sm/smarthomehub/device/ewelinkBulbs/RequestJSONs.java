@@ -1,6 +1,7 @@
 package com.h2sm.smarthomehub.device.ewelinkBulbs;
 
 import java.util.List;
+import java.util.Map;
 
 public class RequestJSONs {
     public static String TURN_ON = "{\n" +
@@ -15,11 +16,11 @@ public class RequestJSONs {
             "    }\n" +
             "}";
 
-    public static String changeColor(List<String> brgb) {//brightness,red,green,blue
-        String brightness = brgb.get(2);
-        String red = brgb.get(3);
-        String green = brgb.get(4);
-        String blue = brgb.get(5);
+    public static String changeColor(Map<String, String> brgb) {//brightness,red,green,blue
+        String brightness = brgb.get("brightness");
+        String red = brgb.get("r");
+        String green = brgb.get("g");
+        String blue = brgb.get("b");
 
         return "{\n" +
                 " \"data\":{\n" +
