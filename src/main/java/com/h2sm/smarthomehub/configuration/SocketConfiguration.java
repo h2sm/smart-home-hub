@@ -44,7 +44,6 @@ public class SocketConfiguration {
         stompClient.setMessageConverter(new MappingJackson2MessageConverter());
         StompSessionHandler sessionHandler = new SocketStompHandler(service());
         stompClient.connect("ws://localhost:8082/hello?token=" + token.getToken() + "&hubUuid=" + uuid, sessionHandler);
-
         //stompClient.start();
         return stompClient;
     }

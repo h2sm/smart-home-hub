@@ -9,7 +9,9 @@ import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.stream.Collectors;
 
 @Service
 @AllArgsConstructor
@@ -57,6 +59,11 @@ public class StompService {
     }
 
     private void getStateOfDevices(Action action) {
+        var ipList = new ArrayList<>(action.getMap().values());
+        ipList.forEach(ip -> {
+            String url = "http://" + ip + ":8081/zeroconf/dimmable";
+
+        });
 
     }
 
